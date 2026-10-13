@@ -70,9 +70,8 @@ const getURLBase = url => url.replace(/[?/][^?/.]+$/, '');
   Arguments:
   0. whether to continue watching after a job is run.
   1: interval in seconds from a cycle of no-job checks to the next cycle.
-  2. whether to ignore unknown-certificate errors from watched servers.
 */
-exports.netWatch = async (isForever, intervalInSeconds, isCertTolerant = true) => {
+exports.netWatch = async (isForever, intervalInSeconds) => {
   // If the job and report URLs exist and are all valid:
   if (
     jobURLs
@@ -93,11 +92,10 @@ exports.netWatch = async (isForever, intervalInSeconds, isCertTolerant = true) =
     let urlIndex = -1;
     let noJobYet = true;
     let abort = false;
-    const certInfo = `Certificate-${isCertTolerant ? '' : 'in'}tolerant`;
     const foreverInfo = isForever ? 'repeating' : 'one-job';
     const intervalInfo = `with ${intervalInSeconds}-second intervals`;
     console.log(
-      `${certInfo} ${foreverInfo} network watching started ${intervalInfo} (${nowString()})\n`
+      `${foreverInfo} network watching started ${intervalInfo} (${nowString()})\n`
     );
     // As long as watching is to continue:
     while ((isForever || noJobYet) && ! abort) {
@@ -124,7 +122,7 @@ exports.netWatch = async (isForever, intervalInSeconds, isCertTolerant = true) =
         try {
           const client = jobURL.startsWith('https://') ? httpsClient : httpClient;
           // Request a job.
-          const requestOptions = isCertTolerant ? {rejectUnauthorized: false} : {};
+          const requestOptions = {};
           if (auths[urlIndex]) {
             requestOptions.method = 'POST';
           }
