@@ -1,6 +1,8 @@
 /*
   © 2021–2024 CVS Health and/or one of its affiliates. All rights reserved.
 
+  MIT License
+
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
   in the Software without restriction, including without limitation the rights
@@ -47,16 +49,14 @@ const {doBy} = require('../procs/job');
 const run = async (content, timeLimit) => {
   const nowLabel = (new Date()).toISOString().slice(0, 19);
   try {
-    const ibmReport = await doBy(
-      timeLimit, accessibilityChecker, 'getCompliance', [content, nowLabel], 'ibm getCompliance'
-    );
-    if (ibmReport !== 'timedOut') {
+    const ibmReport = await accessibilityChecker.getCompliance(content, nowLabel);
+    if (typeof ibmReport === 'object' && ibmReport.report) {
       return ibmReport;
     }
     else {
       return {
         prevented: true,
-        error: `ibm getCompliance timed out at ${timeLimit} seconds`
+        error: 'ibm getCompliance produced no report'
       };
     }
   }
@@ -151,16 +151,6 @@ const doTest = async (content, withItems, timeLimit, rules) => {
     const runReport = await run(content, timeLimit);
     // If there were results:
     if (runReport.report) {
-      // Delete any report files.
-      try {
-        const reportNames = await fs.readdir('ibmOutput');
-        for (const reportName of reportNames) {
-          await fs.rm(`ibmOutput/${reportName}`);
-        }
-      }
-      catch(error) {
-        console.log('No result files created');
-      };
       // Return a trimmed act report.
       const {report} = runReport;
       const trimmedReport = trimActReport(data, report, withItems, rules);
@@ -205,9 +195,8 @@ exports.reporter = async (page, report, actIndex, timeLimit) => {
       // If the act was prevented:
       if (data && data.prevented) {
         // Report this.
-        const message = `ERROR: Act failed or timed out at ${timeLimit} seconds`;
-        console.log(message);
-        data.error = data.error ? `${data.error}; ${message}` : message;
+        const message = 'ERROR: Act was prevented';
+        data.error ??= message;
         // Return the failure.
         return {
           data,

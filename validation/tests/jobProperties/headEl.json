@@ -1,0 +1,55 @@
+{
+  "rule": "headEl",
+  "timeLimit": 20,
+  "acts": [
+    {
+      "type": "launch",
+      "target": {
+        "url": "file://validation/tests/targets/headEl/index.html",
+        "what": "page with valid and invalid elements in the head"
+      }
+    },
+    {
+      "type": "test",
+      "which": "testaro",
+      "withItems": true,
+      "stopOnFail": true,
+      "expect": [
+        [
+          "standardResult.totals.2",
+          "=",
+          2
+        ],
+        [
+          "standardResult.totals.3",
+          "=",
+          0
+        ],
+        [
+          "standardResult.instances.0.ruleID",
+          "=",
+          "headEl"
+        ],
+        [
+          "standardResult.instances.0.what",
+          "i",
+          ": P, SPAN"
+        ],
+        [
+          "standardResult.instances.0.ordinalSeverity",
+          "=",
+          2
+        ],
+        [
+          "standardResult.instances.0.count",
+          "=",
+          2
+        ]
+      ],
+      "rules": [
+        "y",
+        "headEl"
+      ]
+    }
+  ]
+}

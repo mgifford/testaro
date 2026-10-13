@@ -1,6 +1,8 @@
 /*
   © 2023–2024 CVS Health and/or one of its affiliates. All rights reserved.
 
+  MIT License
+
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
   in the Software without restriction, including without limitation the rights
@@ -315,37 +317,40 @@ const doWAVE = (result, standardResult, categoryName) => {
   if (result.categories && result.categories[categoryName]) {
     const category = result.categories[categoryName];
     const ordinalSeverity = categoryName === 'alert' ? 0 : 3;
-    Object.keys(category.items).forEach(ruleID => {
-      category.items[ruleID].selectors.forEach(selector => {
-        let tagName = '';
-        let id = '';
-        if (typeof selector === 'string') {
-          const finalTerm = selector.replace(/^.+\s/, '');
-          if (finalTerm.includes('#')) {
-            const finalArray = finalTerm.split('#');
-            tagName = finalArray[0].replace(/:.*/, '');
-            id = isBadID(finalArray[1]) ? '' : finalArray[1];
+    const {items} = category;
+    if (items) {
+      Object.keys(items).forEach(ruleID => {
+        items[ruleID].selectors.forEach(selector => {
+          let tagName = '';
+          let id = '';
+          if (typeof selector === 'string') {
+            const finalTerm = selector.replace(/^.+\s/, '');
+            if (finalTerm.includes('#')) {
+              const finalArray = finalTerm.split('#');
+              tagName = finalArray[0].replace(/:.*/, '');
+              id = isBadID(finalArray[1]) ? '' : finalArray[1];
+            }
+            else {
+              tagName = finalTerm.replace(/:.*/, '');
+            }
           }
-          else {
-            tagName = finalTerm.replace(/:.*/, '');
-          }
-        }
-        const instance = {
-          ruleID,
-          what: category.items[ruleID].description,
-          ordinalSeverity,
-          tagName,
-          id,
-          location: {
-            doc: 'dom',
-            type: 'selector',
-            spec: selector
-          },
-          excerpt: ''
-        };
-        standardResult.instances.push(instance);
+          const instance = {
+            ruleID,
+            what: items[ruleID].description,
+            ordinalSeverity,
+            tagName,
+            id,
+            location: {
+              doc: 'dom',
+              type: 'selector',
+              spec: selector
+            },
+            excerpt: ''
+          };
+          standardResult.instances.push(instance);
+        });
       });
-    });
+    }
   }
 };
 // Converts a result.
@@ -640,6 +645,24 @@ const convert = (toolName, data, result, standardResult) => {
       });
     }
   }
+  // wave
+  else if (
+    toolName === 'wave'
+    && result.categories
+    && (
+      result.categories.error
+      || result.categories.contrast
+      || result.categories.alert
+    )
+  ) {
+    const {categories} = result;
+    standardResult.totals = [0, 0, 0, 0];
+    standardResult.totals[0] = categories.alert.count;
+    standardResult.totals[3] = (categories.error.count || 0) + (categories.contrast.count || 0);
+    ['error', 'contrast', 'alert'].forEach(categoryName => {
+      doWAVE(result, standardResult, categoryName);
+    });
+  }
   // wax
   else if (toolName === 'wax' && result.violations && result.violations.length) {
     // For each violation:
@@ -681,22 +704,8 @@ const convert = (toolName, data, result, standardResult) => {
       standardResult.instances.push(instance);
     });
   }
-  // wave
-  else if (
-    toolName === 'wave'
-    && result.categories
-    && (
-      result.categories.error
-      || result.categories.contrast
-      || result.categories.alert
-    )
-  ) {
-    ['error', 'contrast', 'alert'].forEach(categoryName => {
-      doWAVE(result, standardResult, categoryName);
-    });
-  }
-  // Populate the totals of the standard result if the tool is not Testaro.
-  if (toolName !== 'testaro') {
+  // Populate the totals of the standard result if the tool is not Testaro or WAVE.
+  if (! ['testaro', 'wave'].includes(toolName)) {
     standardResult.instances.forEach(instance => {
       standardResult.totals[instance.ordinalSeverity] += instance.count || 1;
     });

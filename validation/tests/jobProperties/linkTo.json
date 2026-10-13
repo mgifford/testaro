@@ -1,0 +1,122 @@
+{
+  "rule": "linkTo",
+  "timeLimit": 20,
+  "acts": [
+    {
+      "type": "launch",
+      "target": {
+        "url": "file://validation/tests/targets/linkTo/index.html",
+        "what": "page with links with and without destinations"
+      }
+    },
+    {
+      "type": "test",
+      "which": "testaro",
+      "withItems": true,
+      "stopOnFail": true,
+      "expect": [
+        [
+          "standardResult.totals.2",
+          "=",
+          1
+        ],
+        [
+          "standardResult.totals.1",
+          "=",
+          0
+        ],
+        [
+          "standardResult.instances.0.ruleID",
+          "=",
+          "linkTo"
+        ],
+        [
+          "standardResult.instances.0.what",
+          "i",
+          "Element has no"
+        ],
+        [
+          "standardResult.instances.0.ordinalSeverity",
+          "=",
+          2
+        ],
+        [
+          "standardResult.instances.0.tagName",
+          "=",
+          "A"
+        ],
+        [
+          "standardResult.instances.0.location.doc",
+          "=",
+          "dom"
+        ],
+        [
+          "standardResult.instances.0.location.type",
+          "=",
+          "box"
+        ],
+        [
+          "standardResult.instances.0.location.spec.x",
+          ">",
+          0
+        ],
+        [
+          "standardResult.instances.0.excerpt",
+          "i",
+          "nothing"
+        ]
+      ],
+      "rules": [
+        "y",
+        "linkTo"
+      ]
+    },
+    {
+      "type": "test",
+      "which": "testaro",
+      "withItems": false,
+      "stopOnFail": true,
+      "expect": [
+        [
+          "standardResult.totals.2",
+          "=",
+          1
+        ],
+        [
+          "standardResult.totals.3",
+          "=",
+          0
+        ],
+        [
+          "standardResult.instances.0.ruleID",
+          "=",
+          "linkTo"
+        ],
+        [
+          "standardResult.instances.0.what",
+          "i",
+          "Links are missing"
+        ],
+        [
+          "standardResult.instances.0.tagName",
+          "=",
+          "A"
+        ],
+        [
+          "standardResult.instances.0.ordinalSeverity",
+          "=",
+          2
+        ],
+        [
+          "standardResult.instances.0.count",
+          "=",
+          1
+        ]
+      ],
+      "rules": [
+        "y",
+        "linkTo"
+      ]
+    }
+  ]
+}

@@ -1,6 +1,8 @@
 /*
   © 2023–2024 CVS Health and/or one of its affiliates. All rights reserved.
 
+  MIT License
+
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
   in the Software without restriction, including without limitation the rights
@@ -35,17 +37,20 @@ const agent = process.env.AGENT;
 
 // Sends a notification to an observer.
 exports.tellServer = (report, messageParams, logMessage) => {
-  const observer = report.sendReportTo.replace(/report$/, 'granular');
-  const whoParams = `agent=${agent}&jobID=${report.id || ''}`;
-  const wholeURL = `${observer}?${whoParams}&${messageParams}`;
-  const client = wholeURL.startsWith('https://') ? httpsClient : httpClient;
-  client.request(wholeURL)
-  // If the notification threw an error:
-  .on('error', error => {
-    // Report the error.
-    const errorMessage = 'ERROR notifying the server';
-    console.log(`${errorMessage} (${error.message})`);
-  })
-  .end();
-  console.log(`${logMessage} (server notified)`);
+  const {serverID} = report.sources;
+  const observerURL = typeof serverID === 'number' ? process.env[`NETWATCH_URL_${serverID}_OBSERVE`] : '';
+  if (observerURL) {
+    const whoParams = `agent=${agent}&jobID=${report.id || ''}`;
+    const wholeURL = `${observer}?${whoParams}&${messageParams}`;
+    const client = wholeURL.startsWith('https://') ? httpsClient : httpClient;
+    client.request(wholeURL)
+    // If the notification threw an error:
+    .on('error', error => {
+      // Report the error.
+      const errorMessage = 'ERROR notifying the server';
+      console.log(`${errorMessage} (${error.message})`);
+    })
+    .end();
+    console.log(`${logMessage} (server notified)`);
+  }
 };

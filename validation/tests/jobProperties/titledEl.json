@@ -1,0 +1,142 @@
+{
+  "rule": "titledEl",
+  "timeLimit": 20,
+  "acts": [
+    {
+      "type": "launch",
+      "target": {
+        "url": "file://validation/tests/targets/titledEl/index.html",
+        "what": "page with valid and invalid title attributes"
+      }
+    },
+    {
+      "type": "test",
+      "which": "testaro",
+      "withItems": true,
+      "stopOnFail": true,
+      "expect": [
+        [
+          "standardResult.totals.2",
+          "=",
+          2
+        ],
+        [
+          "standardResult.totals.3",
+          "=",
+          0
+        ],
+        [
+          "standardResult.instances.length",
+          "=",
+          2
+        ],
+        [
+          "standardResult.instances.0.ruleID",
+          "=",
+          "titledEl"
+        ],
+        [
+          "standardResult.instances.0.what",
+          "i",
+          "Ineligible element has"
+        ],
+        [
+          "standardResult.instances.0.ordinalSeverity",
+          "=",
+          2
+        ],
+        [
+          "standardResult.instances.0.tagName",
+          "=",
+          "P"
+        ],
+        [
+          "standardResult.instances.0.location.doc",
+          "=",
+          "dom"
+        ],
+        [
+          "standardResult.instances.0.location.type",
+          "=",
+          "box"
+        ],
+        [
+          "standardResult.instances.0.location.spec.y",
+          ">",
+          0
+        ],
+        [
+          "standardResult.instances.0.excerpt",
+          "i",
+          "This paragraph"
+        ],
+        [
+          "standardResult.instances.1.tagName",
+          "=",
+          "P"
+        ],
+        [
+          "standardResult.instances.1.excerpt",
+          "i",
+          "still violates"
+        ]
+      ],
+      "rules": [
+        "y",
+        "titledEl"
+      ]
+    },
+    {
+      "type": "test",
+      "which": "testaro",
+      "withItems": false,
+      "stopOnFail": true,
+      "expect": [
+        [
+          "standardResult.totals.2",
+          "=",
+          2
+        ],
+        [
+          "standardResult.totals.1",
+          "=",
+          0
+        ],
+        [
+          "standardResult.instances.length",
+          "=",
+          1
+        ],
+        [
+          "standardResult.instances.0.ruleID",
+          "=",
+          "titledEl"
+        ],
+        [
+          "standardResult.instances.0.what",
+          "i",
+          "elements have"
+        ],
+        [
+          "standardResult.instances.0.ordinalSeverity",
+          "=",
+          2
+        ],
+        [
+          "standardResult.instances.0.count",
+          "=",
+          2
+        ],
+        [
+          "standardResult.instances.0.tagName",
+          "=",
+          ""
+        ]
+      ],
+      "rules": [
+        "y",
+        "titledEl"
+      ]
+    }
+  ]
+}

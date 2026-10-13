@@ -1,6 +1,8 @@
 /*
   © 2023–2024 CVS Health and/or one of its affiliates. All rights reserved.
 
+  MIT License
+
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
   in the Software without restriction, including without limitation the rights
@@ -43,8 +45,6 @@ const reportDir = process.env.REPORTDIR;
 
 // ########## FUNCTIONS
 
-// Gets a segment of a timestamp.
-const tsPart = (timeStamp, startIndex) => timeStamp.slice(startIndex, startIndex + 2);
 // Returns a string representing the date and time.
 const nowString = () => (new Date()).toISOString().slice(2, 16);
 // Writes a directory report.
@@ -90,13 +90,15 @@ const wait = ms => {
     }, ms);
   });
 };
-/* 
+/*
   Checks for a directory job and, when found, performs and reports it.
   Arguments:
   0. Whether to continue watching after a job is run.
   1: interval in seconds from a no-job check to the next check.
 */
 exports.dirWatch = async (isForever, intervalInSeconds) => {
+  intervalInSeconds ||= 5;
+  intervalInSeconds = Math.max(intervalInSeconds, 5);
   console.log(`Starting to watch directory ${jobDir}/todo for jobs`);
   let notYetRun = true;
   // As long as watching as to continue:
@@ -113,20 +115,18 @@ exports.dirWatch = async (isForever, intervalInSeconds) => {
           const jobJSON = await fs.readFile(`${jobDir}/todo/${jobFileNames[0]}`, 'utf8');
           try {
             const job = JSON.parse(jobJSON);
-            const report = JSON.parse(jobJSON);
+            let report = JSON.parse(jobJSON);
             // Ensure it has no server properties.
             job.observe = false;
-            job.sendReportTo = '';
             report.observe = false;
-            report.sendReportTo = '';
             const {id} = job;
-            console.log(`Directory job ${id} ready to do (${nowString()})`);
-            // Perform it.
-            await doJob(report);
+            console.log(`\n\nDirectory job ${id} ready to do (${nowString()})`);
+            // Perform it and get a report.
+            report = await doJob(report);
             console.log(`Job ${id} finished (${nowString()})`);
-            // Report it.
+            // Save the report.
             await writeDirReport(report);
-            // Archive it.
+            // Archive the job.
             await archiveJob(job, true);
           }
           catch(error) {

@@ -1,0 +1,122 @@
+{
+  "rule": "lineHeight",
+  "timeLimit": 20,
+  "acts": [
+    {
+      "type": "launch",
+      "target": {
+        "url": "file://validation/tests/targets/lineheight/index.html",
+        "what": "page with various line heights"
+      }
+    },
+    {
+      "type": "test",
+      "which": "testaro",
+      "withItems": true,
+      "stopOnFail": true,
+      "expect": [
+        [
+          "standardResult.totals.1",
+          "=",
+          1
+        ],
+        [
+          "standardResult.instances.length",
+          "=",
+          1
+        ],
+        [
+          "standardResult.instances.0.ruleID",
+          "=",
+          "lineHeight"
+        ],
+        [
+          "standardResult.instances.0.what",
+          "i",
+          "is less than 1.5 times"
+        ],
+        [
+          "standardResult.instances.0.ordinalSeverity",
+          "=",
+          1
+        ],
+        [
+          "standardResult.instances.0.tagName",
+          "=",
+          "P"
+        ],
+        [
+          "standardResult.instances.0.id",
+          "=",
+          "clip"
+        ],
+        [
+          "standardResult.instances.0.location.doc",
+          "=",
+          "dom"
+        ],
+        [
+          "standardResult.instances.0.location.type",
+          "=",
+          "selector"
+        ],
+        [
+          "standardResult.instances.0.location.spec",
+          "=",
+          "#clip"
+        ],
+        [
+          "standardResult.instances.0.excerpt",
+          "i",
+          "puny text"
+        ]
+      ],
+      "rules": [
+        "y",
+        "lineHeight"
+      ]
+    },
+    {
+      "type": "test",
+      "which": "testaro",
+      "withItems": false,
+      "stopOnFail": true,
+      "expect": [
+        [
+          "standardResult.totals.1",
+          "=",
+          1
+        ],
+        [
+          "standardResult.totals.2",
+          "=",
+          0
+        ],
+        [
+          "standardResult.instances.length",
+          "=",
+          1
+        ],
+        [
+          "standardResult.instances.0.ruleID",
+          "=",
+          "lineHeight"
+        ],
+        [
+          "standardResult.instances.0.count",
+          "=",
+          1
+        ],
+        [
+          "standardResult.instances.0.what",
+          "i",
+          "heights less than 1.5 times"
+        ]
+      ],
+      "rules": [
+        "y",
+        "lineHeight"
+      ]
+    }
+  ]
+}

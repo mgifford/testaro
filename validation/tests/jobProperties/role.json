@@ -1,0 +1,132 @@
+{
+  "rule": "role",
+  "timeLimit": 20,
+  "acts": [
+    {
+      "type": "launch",
+      "target": {
+        "url": "file://validation/tests/targets/role/good.html",
+        "what": "page with standard roles"
+      }
+    },
+    {
+      "type": "test",
+      "which": "testaro",
+      "stopOnFail": true,
+      "expect": [
+        [
+          "standardResult.totals.1",
+          "=",
+          0
+        ],
+        [
+          "standardResult.totals.3",
+          "=",
+          0
+        ],
+        [
+          "standardResult.instances.length",
+          "=",
+          0
+        ]
+      ],
+      "withItems": true,
+      "rules": [
+        "y",
+        "role"
+      ]
+    },
+    {
+      "type": "url",
+      "which": "file://validation/tests/targets/role/bad.html",
+      "what": "page with deviant roles"
+    },
+    {
+      "type": "test",
+      "which": "testaro",
+      "stopOnFail": true,
+      "expect": [
+        [
+          "standardResult.totals.0",
+          "=",
+          8
+        ],
+        [
+          "standardResult.totals.3",
+          "=",
+          0
+        ],
+        [
+          "standardResult.instances.1.ruleID",
+          "=",
+          "role"
+        ],
+        [
+          "standardResult.instances.1.what",
+          "i",
+          "which is also an implicit"
+        ],
+        [
+          "standardResult.instances.1.ordinalSeverity",
+          "=",
+          0
+        ],
+        [
+          "standardResult.instances.1.tagName",
+          "=",
+          "H2"
+        ],
+        [
+          "standardResult.instances.2.ruleID",
+          "=",
+          "role"
+        ],
+        [
+          "standardResult.instances.2.what",
+          "i",
+          "which is also an implicit"
+        ],
+        [
+          "standardResult.instances.2.ordinalSeverity",
+          "=",
+          0
+        ],
+        [
+          "standardResult.instances.2.tagName",
+          "=",
+          "H3"
+        ],
+        [
+          "standardResult.instances.4.what",
+          "i",
+          "which is also an implicit"
+        ],
+        [
+          "standardResult.instances.4.ordinalSeverity",
+          "=",
+          0
+        ],
+        [
+          "standardResult.instances.4.tagName",
+          "=",
+          "H3"
+        ],
+        [
+          "standardResult.instances.7.tagName",
+          "i",
+          "INPUT"
+        ],
+        [
+          "standardResult.instances.4.ordinalSeverity",
+          "=",
+          0
+        ]
+      ],
+      "withItems": true,
+      "rules": [
+        "y",
+        "role"
+      ]
+    }
+  ]
+}

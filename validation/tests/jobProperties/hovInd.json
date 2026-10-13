@@ -1,0 +1,168 @@
+{
+  "rule": "hovInd",
+  "timeLimit": 40,
+  "acts": [
+    {
+      "type": "launch",
+      "target": {
+        "url": "file://validation/tests/targets/hovInd/index.html",
+        "what": "page with varied hover indicators"
+      }
+    },
+    {
+      "type": "test",
+      "which": "testaro",
+      "withItems": true,
+      "stopOnFail": true,
+      "expect": [
+        [
+          "standardResult.totals.0",
+          "=",
+          0
+        ],
+        [
+          "standardResult.totals.1",
+          "=",
+          3
+        ],
+        [
+          "standardResult.totals.2",
+          "=",
+          2
+        ],
+        [
+          "standardResult.totals.3",
+          "=",
+          0
+        ],
+        [
+          "standardResult.instances.0.ruleID",
+          "=",
+          "hovInd"
+        ],
+        [
+          "standardResult.instances.0.what",
+          "i",
+          "has a nonstandard"
+        ],
+        [
+          "standardResult.instances.0.ordinalSeverity",
+          "=",
+          2
+        ],
+        [
+          "standardResult.instances.0.tagName",
+          "=",
+          "A"
+        ],
+        [
+          "standardResult.instances.0.id",
+          "=",
+          "trigger1"
+        ],
+        [
+          "standardResult.instances.0.location.doc",
+          "=",
+          "dom"
+        ],
+        [
+          "standardResult.instances.0.location.type",
+          "=",
+          "selector"
+        ],
+        [
+          "standardResult.instances.0.location.spec",
+          "=",
+          "#trigger1"
+        ],
+        [
+          "standardResult.instances.0.excerpt",
+          "i",
+          "Trigger 1"
+        ],
+        [
+          "standardResult.instances.1.what",
+          "i",
+          "has a nonstandard"
+        ],
+        [
+          "standardResult.instances.2.ruleID",
+          "=",
+          "hovInd"
+        ],
+        [
+          "standardResult.instances.2.what",
+          "i",
+          "do not change"
+        ],
+        [
+          "standardResult.instances.3.ruleID",
+          "=",
+          "hovInd"
+        ],
+        [
+          "standardResult.instances.3.what",
+          "i",
+          "are alike on hover and focus"
+        ],
+        [
+          "standardResult.instances.3.ordinalSeverity",
+          "=",
+          1
+        ],
+        [
+          "standardResult.instances.3.tagName",
+          "=",
+          "INPUT"
+        ],
+        [
+          "standardResult.instances.3.location.type",
+          "=",
+          "box"
+        ],
+        [
+          "standardResult.instances.3.excerpt",
+          "i",
+          "Trigger 4: Enter"
+        ],
+        [
+          "standardResult.instances.4.ruleID",
+          "=",
+          "hovInd"
+        ],
+        [
+          "standardResult.instances.4.what",
+          "i",
+          "do not change"
+        ],
+        [
+          "standardResult.instances.4.ordinalSeverity",
+          "=",
+          1
+        ],
+        [
+          "standardResult.instances.4.tagName",
+          "=",
+          "BUTTON"
+        ],
+        [
+          "standardResult.instances.4.location.spec.x",
+          ">",
+          0
+        ],
+        [
+          "standardResult.instances.4.excerpt",
+          "i",
+          "Trigger 5"
+        ]
+      ],
+      "rules": [
+        "y",
+        "hovInd"
+      ],
+      "args": {
+        "hovInd": [7]
+      }
+    }
+  ]
+}

@@ -1,6 +1,8 @@
 /*
   © 2022–2024 CVS Health and/or one of its affiliates. All rights reserved.
 
+  MIT License
+
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
   in the Software without restriction, including without limitation the rights
@@ -39,9 +41,9 @@ const jobID = '240101T1200-simple-example';
 // Get the simple job.
 fs.readFile(`${__dirname}/../jobs/todo/${jobID}.json`, 'utf8')
 .then(async jobJSON => {
-  const report = JSON.parse(jobJSON);
+  const job = JSON.parse(jobJSON);
   // Run it.
-  await doJob(report);
+  const report = await doJob(job);
   try {
     // Check the report against expectations.
     const {acts, jobData} = report;

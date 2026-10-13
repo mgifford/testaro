@@ -1,6 +1,6 @@
 {
   "name": "testaro",
-  "version": "47.1.1",
+  "version": "58.0.6",
   "description": "Run 1000 web accessibility tests from 11 tools and get a standardized report",
   "main": "index.js",
   "scripts": {
@@ -28,10 +28,12 @@
   "homepage": "https://github.com/cvs-health/testaro#readme",
   "dependencies": {
     "@qualweb/core": "*",
+    "@qualweb/act-rules": "*",
+    "@qualweb/wcag-techniques": "*",
+    "@qualweb/best-practices": "*",
     "@siteimprove/alfa-act": "*",
     "@siteimprove/alfa-playwright": "*",
     "@siteimprove/alfa-rules": "*",
-    "@siteimprove/alfa-scraper": "*",
     "@wally-ax/wax-dev": "*",
     "accessibility-checker": "*",
     "aslint-testaro": "*",

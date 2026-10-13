@@ -1,0 +1,112 @@
+{
+  "rule": "labClash",
+  "timeLimit": 20,
+  "acts": [
+    {
+      "type": "launch",
+      "target": {
+        "url": "file://validation/tests/targets/labClash/good.html",
+        "what": "page with standard labeling"
+      }
+    },
+    {
+      "type": "test",
+      "which": "testaro",
+      "withItems": true,
+      "stopOnFail": true,
+      "expect": [
+        [
+          "standardResult.totals.2",
+          "=",
+          0
+        ],
+        [
+          "standardResult.totals.3",
+          "=",
+          0
+        ],
+        [
+          "standardResult.instances.length",
+          "=",
+          0
+        ]
+      ],
+      "rules": [
+        "y",
+        "labClash"
+      ]
+    },
+    {
+      "type": "url",
+      "which": "file://validation/tests/targets/labClash/bad.html",
+      "what": "page with deviant labeling"
+    },
+    {
+      "type": "test",
+      "which": "testaro",
+      "withItems": true,
+      "stopOnFail": true,
+      "expect": [
+        [
+          "standardResult.totals.2",
+          "=",
+          3
+        ],
+        [
+          "standardResult.totals.3",
+          "=",
+          0
+        ],
+        [
+          "standardResult.totals.1",
+          "=",
+          0
+        ],
+        [
+          "standardResult.instances.0.ruleID",
+          "=",
+          "labClash"
+        ],
+        [
+          "standardResult.instances.0.what",
+          "i",
+          "aria-labelledby"
+        ],
+        [
+          "standardResult.instances.0.tagName",
+          "=",
+          "BUTTON"
+        ],
+        [
+          "standardResult.instances.0.id",
+          "=",
+          "labButton"
+        ],
+        [
+          "standardResult.instances.0.location.doc",
+          "=",
+          "dom"
+        ],
+        [
+          "standardResult.instances.0.location.type",
+          "=",
+          "selector"
+        ],
+        [
+          "standardResult.instances.0.location.spec",
+          "=",
+          "#labButton"
+        ],
+        [
+          "standardResult.instances.0.excerpt",
+          "i",
+          "button"
+        ]
+      ],
+      "rules": [
+        "y",
+        "labClash"
+      ]
+    }
+  ]
+}

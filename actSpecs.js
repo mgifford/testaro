@@ -1,6 +1,8 @@
 /*
   © 2021–2024 CVS Health and/or one of its affiliates. All rights reserved.
 
+  MIT License
+
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
   in the Software without restriction, including without limitation the rights
@@ -144,8 +146,8 @@ exports.actSpecs = {
       'Perform tests of a tool',
       {
         which: [true, 'string', 'isTest', 'tool name'],
-        launch: [false, 'object', '', 'if new browser to be launched, properties different from target, browserID, and what of the job'],
-        rules: [false, 'array', 'areStrings', 'rule IDs or (for nuVal) specifications, if not all']
+        launch: [false, 'object', '', 'new target, browserID, and/or what, if any'],
+        rules: [false, 'array', 'areStrings', 'rule IDs or (for testaro or nuVal) specifications, if not all']
       }
     ],
     text: [

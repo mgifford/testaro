@@ -1,6 +1,8 @@
 /*
   © 2023–2024 CVS Health and/or one of its affiliates. All rights reserved.
 
+  MIT License
+
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
   in the Software without restriction, including without limitation the rights
@@ -185,10 +187,12 @@ exports.reporter = async (page, report, actIndex, timeLimit) => {
       };
     }
     // Return the data and result, discarding the separate element data.
+    const data = {};
+    if (result.prevented) {
+      data.prevented = true;
+    }
     return {
-      data: {
-        prevented: result.prevented
-      },
+      data,
       result
     };
   }
@@ -196,12 +200,8 @@ exports.reporter = async (page, report, actIndex, timeLimit) => {
   else {
     // Return this.
     return {
-      data: {
-        prevented: false
-      },
-      result: {
-        prevented: false,
-      }
+      data: {},
+      result: {}
     }
   }
 };

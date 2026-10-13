@@ -1,0 +1,127 @@
+{
+  "rule": "styleDiff",
+  "timeLimit": 20,
+  "acts": [
+    {
+      "type": "launch",
+      "target": {
+        "url": "file://validation/tests/targets/styleDiff/good.html",
+        "what": "page with consistent styles"
+      }
+    },
+    {
+      "type": "test",
+      "which": "testaro",
+      "withItems": true,
+      "stopOnFail": true,
+      "expect": [
+        [
+          "standardResult.totals.0",
+          "=",
+          0
+        ],
+        [
+          "standardResult.totals.3",
+          "=",
+          0
+        ],
+        [
+          "standardResult.instances.length",
+          "=",
+          0
+        ]
+      ],
+      "rules": [
+        "y",
+        "styleDiff"
+      ]
+    },
+    {
+      "type": "url",
+      "which": "file://validation/tests/targets/styleDiff/bad.html",
+      "what": "page with consistent styles"
+    },
+    {
+      "type": "test",
+      "which": "testaro",
+      "withItems": true,
+      "stopOnFail": true,
+      "expect": [
+        [
+          "standardResult.totals.0",
+          "=",
+          1
+        ],
+        [
+          "standardResult.totals.1",
+          "=",
+          1
+        ],
+        [
+          "standardResult.totals.2",
+          "=",
+          1
+        ],
+        [
+          "standardResult.totals.3",
+          "=",
+          2
+        ],
+        [
+          "standardResult.instances.0.ruleID",
+          "=",
+          "styleDiff"
+        ],
+        [
+          "standardResult.instances.0.what",
+          "i",
+          "In-line links have 2"
+        ],
+        [
+          "standardResult.instances.0.count",
+          "=",
+          1
+        ],
+        [
+          "standardResult.instances.0.ordinalSeverity",
+          "=",
+          0
+        ],
+        [
+          "standardResult.instances.0.tagName",
+          "=",
+          "A"
+        ],
+        [
+          "standardResult.instances.3.ruleID",
+          "=",
+          "styleDiff"
+        ],
+        [
+          "standardResult.instances.3.what",
+          "i",
+          "Level-2 headings have 3"
+        ],
+        [
+          "standardResult.instances.3.count",
+          "=",
+          2
+        ],
+        [
+          "standardResult.instances.3.ordinalSeverity",
+          "=",
+          3
+        ],
+        [
+          "standardResult.instances.3.tagName",
+          "=",
+          "H2"
+        ]
+      ],
+      "rules": [
+        "y",
+        "styleDiff"
+      ]
+    }
+  ]
+}

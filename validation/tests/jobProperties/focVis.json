@@ -1,0 +1,70 @@
+{
+  "rule": "focVis",
+  "timeLimit": 20,
+  "acts": [
+    {
+      "type": "launch",
+      "target": {
+        "url": "file://validation/tests/targets/focVis/index.html",
+        "what": "page with links outside the viewport"
+      }
+    },
+    {
+      "type": "test",
+      "which": "testaro",
+      "withItems": true,
+      "stopOnFail": true,
+      "expect": [
+        [
+          "standardResult.totals.2",
+          "=",
+          1
+        ],
+        [
+          "standardResult.instances.0.ruleID",
+          "=",
+          "focVis"
+        ],
+        [
+          "standardResult.instances.0.what",
+          "i",
+          "link is above"
+        ],
+        [
+          "standardResult.instances.0.tagName",
+          "=",
+          "A"
+        ],
+        [
+          "standardResult.instances.0.id",
+          "=",
+          "basqueInfo"
+        ],
+        [
+          "standardResult.instances.0.location.doc",
+          "=",
+          "dom"
+        ],
+        [
+          "standardResult.instances.0.location.type",
+          "=",
+          "selector"
+        ],
+        [
+          "standardResult.instances.0.location.spec",
+          "=",
+          "#basqueInfo"
+        ],
+        [
+          "standardResult.instances.0.excerpt",
+          "i",
+          "Basque information"
+        ]
+      ],
+      "rules": [
+        "y",
+        "focVis"
+      ]
+    }
+  ]
+}

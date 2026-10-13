@@ -1,0 +1,296 @@
+{
+  "rule": "elements",
+  "timeLimit": 20,
+  "acts": [
+    {
+      "type": "launch",
+      "target": {
+        "url": "file://validation/tests/targets/elements/index.html",
+        "what": "page with a shadow root"
+      }
+    },
+    {
+      "type": "test",
+      "which": "testaro",
+      "stopOnFail": true,
+      "expect": [
+        [
+          "result.elements.data.total",
+          "=",
+          21
+        ]
+      ],
+      "withItems": true,
+      "rules": [
+        "y",
+        "elements"
+      ],
+      "args": {
+        "elements": [0, null, false, null]
+      }
+    },
+    {
+      "type": "test",
+      "which": "testaro",
+      "stopOnFail": true,
+      "expect": [
+        [
+          "result.elements.data.total",
+          "=",
+          5
+        ]
+      ],
+      "withItems": true,
+      "rules": [
+        "y",
+        "elements"
+      ],
+      "args": {
+        "elements": [0, "P", true, null]
+      }
+    },
+    {
+      "type": "test",
+      "which": "testaro",
+      "stopOnFail": true,
+      "expect": [
+        [
+          "result.elements.data.total",
+          "=",
+          2
+        ]
+      ],
+      "withItems": true,
+      "rules": [
+        "y",
+        "elements"
+      ],
+      "args": {
+        "elements": [0, "LI", true, null]
+      }
+    },
+    {
+      "type": "test",
+      "which": "testaro",
+      "what": "elements",
+      "stopOnFail": true,
+      "expect": [
+        [
+          "result.elements.data.total",
+          "=",
+          2
+        ]
+      ],
+      "withItems": true,
+      "rules": [
+        "y",
+        "elements"
+      ],
+      "args": {
+        "elements": [0, "P", false, "class"]
+      }
+    },
+    {
+      "type": "test",
+      "which": "testaro",
+      "what": "elements",
+      "stopOnFail": true,
+      "expect": [
+        [
+          "result.elements.data.total",
+          "=",
+          1
+        ],
+        [
+          "result.elements.data.items.0.tagName",
+          "=",
+          "LI"
+        ],
+        [
+          "result.elements.data.items.0.parentTagName",
+          "=",
+          "UL"
+        ],
+        [
+          "result.elements.data.items.0.code",
+          "i",
+          "first"
+        ],
+        [
+          "result.elements.data.items.0.attributes.0.name",
+          "=",
+          "class"
+        ],
+        [
+          "result.elements.data.items.0.attributes.0.value",
+          "=",
+          "first"
+        ],
+        [
+          "result.elements.data.items.0.textContent",
+          "=",
+          "Io"
+        ]
+      ],
+      "withItems": true,
+      "rules": [
+        "y",
+        "elements"
+      ],
+      "args": {
+        "elements": [1, "LI", false, "class=first"]
+      }
+    },
+    {
+      "type": "test",
+      "which": "testaro",
+      "what": "elements",
+      "stopOnFail": true,
+      "expect": [
+        [
+          "result.elements.data.total",
+          "=",
+          2
+        ],
+        [
+          "result.elements.data.items.0.labels.1",
+          "i",
+          "anything"
+        ],
+        [
+          "result.elements.data.items.1.labelers.0",
+          "i",
+          "something else"
+        ]
+      ],
+      "withItems": true,
+      "rules": [
+        "y",
+        "elements"
+      ],
+      "args": {
+        "elements": [1, "INPUT", false, null]
+      }
+    },
+    {
+      "type": "test",
+      "which": "testaro",
+      "what": "elements",
+      "stopOnFail": true,
+      "expect": [
+        [
+          "result.elements.data.items.0.textContent",
+          "=",
+          "Io"
+        ],
+        [
+          "result.elements.data.items.0.parentTextContent",
+          "i",
+          "tute"
+        ]
+      ],
+      "withItems": true,
+      "rules": [
+        "y",
+        "elements"
+      ],
+      "args": {
+        "elements": [2, "LI", false, "class=first"]
+      }
+    },
+    {
+      "type": "test",
+      "which": "testaro",
+      "what": "elements",
+      "attribute": "class",
+      "stopOnFail": true,
+      "expect": [
+        [
+          "result.elements.data.total",
+          "=",
+          1
+        ],
+        [
+          "result.elements.data.items.0.parentTextContent",
+          "i",
+          "alia"
+        ],
+        [
+          "result.elements.data.items.0.parentTextContent",
+          "i",
+          "tute"
+        ]
+      ],
+      "withItems": true,
+      "rules": [
+        "y",
+        "elements"
+      ],
+      "args": {
+        "elements": [2, "LI", true, "class"]
+      }
+    },
+    {
+      "type": "test",
+      "which": "testaro",
+      "what": "elements",
+      "stopOnFail": true,
+      "expect": [
+        [
+          "result.elements.data.items.0.textContent",
+          "=",
+          "This is a paragraph."
+        ],
+        [
+          "result.elements.data.items.0.parentTagName",
+          "=",
+          "MAIN"
+        ],
+        [
+          "result.elements.data.items.0.parentTextContent",
+          "i",
+          "something."
+        ],
+        [
+          "result.elements.data.items.0.siblings.before.0.type",
+          "=",
+          3
+        ],
+        [
+          "result.elements.data.items.0.siblings.before.1.type",
+          "=",
+          1
+        ],
+        [
+          "result.elements.data.items.0.siblings.before.1.tagName",
+          "=",
+          "H1"
+        ],
+        [
+          "result.elements.data.items.0.siblings.after.12.type",
+          "=",
+          1
+        ],
+        [
+          "result.elements.data.items.0.siblings.after.12.tagName",
+          "=",
+          "LABEL"
+        ],
+        [
+          "result.elements.data.items.0.siblings.after.12.attributes.0.name",
+          "=",
+          "for"
+        ]
+      ],
+      "withItems": true,
+      "rules": [
+        "y",
+        "elements"
+      ],
+      "args": {
+        "elements": [3, "P", false, "class=first"]
+      }
+    }
+  ],
+  "standard": "no"
+}

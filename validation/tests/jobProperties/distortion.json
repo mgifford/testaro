@@ -1,0 +1,107 @@
+{
+  "rule": "distortion",
+  "timeLimit": 20,
+  "acts": [
+    {
+      "type": "launch",
+      "target": {
+        "url": "file://validation/tests/targets/distortion/index.html",
+        "what": "page with distorted text"
+      }
+    },
+    {
+      "type": "test",
+      "which": "testaro",
+      "withItems": true,
+      "stopOnFail": true,
+      "expect": [
+        [
+          "standardResult.totals.1",
+          "=",
+          5
+        ],
+        [
+          "standardResult.instances.length",
+          "=",
+          5
+        ],
+        [
+          "standardResult.instances.1.what",
+          "i",
+          "Element distorts"
+        ],
+        [
+          "standardResult.instances.1.tagName",
+          "=",
+          "P"
+        ],
+        [
+          "standardResult.instances.1.id",
+          "=",
+          "matrixp"
+        ],
+        [
+          "standardResult.instances.1.location.type",
+          "=",
+          "selector"
+        ],
+        [
+          "standardResult.instances.1.location.spec",
+          "=",
+          "#matrixp"
+        ],
+        [
+          "standardResult.instances.2.location.type",
+          "=",
+          "box"
+        ],
+        [
+          "standardResult.instances.2.excerpt",
+          "i",
+          "z-axis"
+        ],
+        [
+          "standardResult.instances.3.ordinalSeverity",
+          "=",
+          1
+        ],
+        [
+          "standardResult.instances.4.tagName",
+          "=",
+          "SPAN"
+        ]
+      ],
+      "rules": [
+        "y",
+        "distortion"
+      ]
+    },
+    {
+      "type": "test",
+      "which": "testaro",
+      "withItems": false,
+      "stopOnFail": true,
+      "expect": [
+        [
+          "standardResult.totals.1",
+          "=",
+          5
+        ],
+        [
+          "standardResult.instances.length",
+          "=",
+          1
+        ],
+        [
+          "standardResult.instances.0.count",
+          "=",
+          5
+        ]
+      ],
+      "rules": [
+        "y",
+        "distortion"
+      ]
+    }
+  ]
+}

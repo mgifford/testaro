@@ -1,6 +1,8 @@
 /*
   © 2024 CVS Health and/or one of its affiliates. All rights reserved.
 
+  MIT License
+
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
   in the Software without restriction, including without limitation the rights
@@ -194,7 +196,6 @@ exports.isValidJob = job => {
       timeLimit,
       creationTimeStamp,
       executionTimeStamp,
-      sendReportTo,
       target,
       sources,
       acts
@@ -231,9 +232,6 @@ exports.isValidJob = job => {
     ) {
       return 'bad job executionTimeStamp';
     }
-    if (typeof sendReportTo !== 'string' || sendReportTo && ! isURL(sendReportTo)) {
-      return 'bad job sendReportTo';
-    }
     if (typeof target !== 'object' || target.url && ! isURL(target.url) || target.what === '') {
       return 'bad job target';
     }
@@ -259,33 +257,4 @@ exports.isValidJob = job => {
     // Return this.
     return 'no job';
   }
-};
-// Executes an asynchronous function with a time limit.
-exports.doBy = async function(timeLimit, obj, fnName, fnArgs, noticePrefix) {
-  let timer, fnResolver;
-  // Start the function execution.
-  const fnPromise = new Promise(async function(resolve) {
-    fnResolver = resolve;
-    let fnResult;
-    try {
-      fnResult = await obj[fnName](... fnArgs);
-    }
-    catch(error) {
-      fnResult = `failed (error: ${error.message})`;
-    };
-    resolve(fnResult);
-  });
-  // Start a timer.
-  const timerPromise = new Promise(resolve => {
-    timer = setTimeout(() => {
-      console.log(`ERROR: ${noticePrefix} timed out at ${timeLimit} seconds`);
-      setTimeout(() => {fnResolver('aborted')}, 100);
-      resolve('timedOut');
-    }, 1000 * timeLimit);
-  });
-  // Get the timeout or the value returned by the function, whichever is first.
-  const result = await Promise.race([timerPromise, fnPromise]);
-  clearTimeout(timer);
-  // Return the result.
-  return result;
 };

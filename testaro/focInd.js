@@ -1,6 +1,8 @@
 /*
   © 2021–2023 CVS Health and/or one of its affiliates. All rights reserved.
 
+  MIT License
+
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
   in the Software without restriction, including without limitation the rights
@@ -72,14 +74,41 @@ exports.reporter = async (page, withItems) => {
         else {
           // Focus the element.
           el.focus({preventScroll: true});
-          // If it now has no standard outline:
-          if (
-            Number.parseFloat(styleDec.outlineWidth) < 2
-            || styleDec.outlineColor === 'rgba(0, 0, 0, 0)'
-            || styleDec.outlineStyle !== 'solid'
-          ) {
-            // Return a violation.
-            return 'no standard focus outline';
+          // If it now has no outline:
+          if (styleDec.outlineWidth === '0px') {
+            // Return this violation.
+            return 'no focus outline';
+          }
+          // Otherwise, if it now has an outline thinner than 2 pixels:
+          else if (Number.parseFloat(styleDec.outlineWidth) < 2) {
+            // Return this violation.
+            return 'a focus outline thinner than 2 pixels';
+          }
+          // Otherwise, if it now has a transparent outline:
+          else if (styleDec.outlineColor === 'rgba(0, 0, 0, 0)') {
+            // Return this violation.
+            return 'a transparent focus outline';
+          }
+          // Otherwise, if it now has a non-solid outline:
+          else if (styleDec.outlineStyle !== 'solid') {
+            // If the outline style exists:
+            if (styleDec.outlineStyle) {
+              // If the style is delegated to the user agent:
+              if (styleDec.outlineStyle === 'auto') {
+                // Return conformance.
+                return false;
+              }
+              // Otherwise, i.e. if the style is not delegated to the user agent:
+              else {
+                // Return this violation.
+                return `a focus outline with the ${styleDec.outlineStyle} instead of solid style`;
+              }
+            }
+            // Otherwise, i.e. if no outline style exists:
+            else {
+              // Return this violation.
+              return 'a focus outline with no style instead of solid style';
+            }
           }
           // Otherwise, i.e. if the element now has a standard outline:
           else {

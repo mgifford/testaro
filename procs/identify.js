@@ -1,6 +1,8 @@
 /*
   © 2024 CVS Health and/or one of its affiliates. All rights reserved.
 
+  MIT License
+
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
   in the Software without restriction, including without limitation the rights
@@ -31,8 +33,6 @@
 const getPath = {
   xPath: require('playwright-dompath').xPath
 };
-// Utility module.
-const {doBy} = require('./job');
 
 // FUNCTIONS
 
@@ -81,10 +81,13 @@ const addIDs = async (locators, recipient) => {
       const box = await boxOf(locators);
       recipient.boxID = boxToString(box);
     }
-    // Add the path ID of the element to the result if none exists yet.
+    // If the element has no path ID yet in the result:
     if (! recipient.pathID) {
-      const pathID = await doBy(1, getPath, 'xPath', [locators], 'xPath identification');
-      if (pathID !== 'timedOut') {
+      // Add it to the result.
+      const pathIDPromise = getPath.xPath(locators);
+      const timeoutPromise = setTimeout(() => true, 1000);
+      const pathID = Promise.race([pathIDPromise, timeoutPromise]);
+      if (typeof pathID === 'string') {
         recipient.pathID = pathID;
       }
     }
@@ -157,10 +160,7 @@ exports.identify = async (instance, page) => {
     }
     // If either ID remains undefined and the instance specifies an element ID:
     if (id && ! (elementID.boxID && elementID.pathID)) {
-      /*
-        Get the first locator for an element with the ID, or throw an error if the identifier is
-        invalid.
-      */
+      // Get the first locator for an element with the ID.
       try {
         let locator = page.locator(`#${id.replace(/([-&;/]|^\d)/g, '\\$1')}`).first();
         // Add a box ID and a path ID to the result.

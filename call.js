@@ -1,6 +1,8 @@
 /*
   © 2022–2024 CVS Health and/or one of its affiliates. All rights reserved.
 
+  MIT License
+
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
   in the Software without restriction, including without limitation the rights
@@ -68,12 +70,11 @@ const callRun = async jobIDStart => {
   if (jobFileName) {
     // Get it.
     const jobJSON = await fs.readFile(`${todoDir}/${jobFileName}`, 'utf8');
-    const report = JSON.parse(jobJSON);
+    let report = JSON.parse(jobJSON);
     // Ensure it does not specify server properties.
     report.observe = false;
-    report.sendReportTo = '';
     // Run it.
-    await doJob(report);
+    report = await doJob(report);
     // Archive it.
     await fs.rename(`${todoDir}/${jobFileName}`, `${jobDir}/done/${jobFileName}`);
     // Save the report.
@@ -97,7 +98,6 @@ const callNetWatch = async (isForever, intervalInSeconds, isCertTolerant) => {
     Number.parseInt(intervalInSeconds, 10),
     isCertTolerant ? isCertTolerant === 'true' : undefined
   );
-  console.log('netWatch run');
 };
 
 // OPERATION

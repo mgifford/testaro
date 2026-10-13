@@ -1,5 +1,7 @@
 /*
-  © 2021–2023 CVS Health and/or one of its affiliates. All rights reserved.
+  © 2021–2025 CVS Health and/or one of its affiliates. All rights reserved.
+
+  MIT License
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -25,11 +27,15 @@
   Configuration for the ibm tool.
 */
 
+const os = require('os');
+
+const tmpDir = os.tmpdir();
+
 module.exports = {
   reportLevels: [
     'violation',
     'recommendation'
   ],
-  cacheFolder: `${__dirname}/temp`,
-  outputFolder: `${__dirname}/ibmOutput`
+  cacheFolder: tmpDir,
+  outputFolder: tmpDir
 };

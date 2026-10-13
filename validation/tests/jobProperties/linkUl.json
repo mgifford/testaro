@@ -1,0 +1,231 @@
+{
+  "rule": "linkUl",
+  "timeLimit": 20,
+  "acts": [
+    {
+      "type": "launch",
+      "target": {
+        "url": "file://validation/tests/targets/linkUl/na.html",
+        "what": "page without inline links"
+      }
+    },
+    {
+      "type": "test",
+      "which": "testaro",
+      "withItems": true,
+      "stopOnFail": true,
+      "expect": [
+        [
+          "standardResult.totals.1",
+          "=",
+          0
+        ],
+        [
+          "standardResult.instances.length",
+          "=",
+          0
+        ]
+      ],
+      "rules": [
+        "y",
+        "linkUl"
+      ]
+    },
+    {
+      "type": "url",
+      "which": "file://validation/tests/targets/linkUl/good.html",
+      "what": "page with underlined inline links"
+    },
+    {
+      "type": "test",
+      "which": "testaro",
+      "withItems": true,
+      "stopOnFail": true,
+      "expect": [
+        [
+          "standardResult.totals.1",
+          "=",
+          0
+        ],
+        [
+          "standardResult.totals.2",
+          "=",
+          0
+        ],
+        [
+          "standardResult.instances.length",
+          "=",
+          0
+        ]
+      ],
+      "rules": [
+        "y",
+        "linkUl"
+      ]
+    },
+    {
+      "type": "url",
+      "which": "file://validation/tests/targets/linkUl/bad.html",
+      "what": "page with nonunderlined inline links"
+    },
+    {
+      "type": "test",
+      "which": "testaro",
+      "withItems": true,
+      "stopOnFail": true,
+      "expect": [
+        [
+          "standardResult.totals.1",
+          "=",
+          2
+        ],
+        [
+          "standardResult.totals.2",
+          "=",
+          0
+        ],
+        [
+          "standardResult.instances.length",
+          "=",
+          2
+        ],
+        [
+          "standardResult.instances.0.ruleID",
+          "=",
+          "linkUl"
+        ],
+        [
+          "standardResult.instances.0.what",
+          "i",
+          "but has no"
+        ],
+        [
+          "standardResult.instances.0.ordinalSeverity",
+          "=",
+          1
+        ],
+        [
+          "standardResult.instances.0.tagName",
+          "=",
+          "A"
+        ],
+        [
+          "standardResult.instances.0.id",
+          "=",
+          "overline"
+        ],
+        [
+          "standardResult.instances.0.location.doc",
+          "=",
+          "dom"
+        ],
+        [
+          "standardResult.instances.0.location.type",
+          "=",
+          "selector"
+        ],
+        [
+          "standardResult.instances.0.location.spec",
+          "=",
+          "#overline"
+        ],
+        [
+          "standardResult.instances.0.excerpt",
+          "i",
+          "English"
+        ],
+        [
+          "standardResult.instances.1.what",
+          "i",
+          "but has no"
+        ],
+        [
+          "standardResult.instances.1.tagName",
+          "=",
+          "A"
+        ],
+        [
+          "standardResult.instances.1.location.doc",
+          "=",
+          "dom"
+        ],
+        [
+          "standardResult.instances.1.location.type",
+          "=",
+          "box"
+        ],
+        [
+          "standardResult.instances.1.location.spec.y",
+          ">",
+          0
+        ],
+        [
+          "standardResult.instances.1.excerpt",
+          "i",
+          "French"
+        ]
+      ],
+      "rules": [
+        "y",
+        "linkUl"
+      ]
+    },
+    {
+      "type": "test",
+      "which": "testaro",
+      "withItems": false,
+      "stopOnFail": true,
+      "expect": [
+        [
+          "standardResult.totals.1",
+          "=",
+          2
+        ],
+        [
+          "standardResult.totals.2",
+          "=",
+          0
+        ],
+        [
+          "standardResult.instances.length",
+          "=",
+          1
+        ],
+        [
+          "standardResult.instances.0.ruleID",
+          "=",
+          "linkUl"
+        ],
+        [
+          "standardResult.instances.0.what",
+          "i",
+          "missing"
+        ],
+        [
+          "standardResult.instances.0.ordinalSeverity",
+          "=",
+          1
+        ],
+        [
+          "standardResult.instances.0.count",
+          "=",
+          2
+        ],
+        [
+          "standardResult.instances.0.tagName",
+          "=",
+          "A"
+        ],
+        [
+          "standardResult.instances.0.location.doc",
+          "=",
+          ""
+        ]
+      ],
+      "rules": [
+        "y",
+        "linkUl"
+      ]
+    }
+  ]
+}

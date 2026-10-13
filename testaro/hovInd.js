@@ -1,5 +1,7 @@
 /*
-  © 2023 CVS Health and/or one of its affiliates. All rights reserved.
+  © 2023–2025 CVS Health and/or one of its affiliates. All rights reserved.
+
+  MIT License
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -62,6 +64,7 @@ const getHoverStyles = async loc => await loc.evaluate(element => {
     outlineStyle,
     outlineWidth,
     outlineOffset,
+    color,
     backgroundColor
   } = window.getComputedStyle(element);
   return {
@@ -70,6 +73,7 @@ const getHoverStyles = async loc => await loc.evaluate(element => {
     cursor: cursor.replace(/^.+, */, ''),
     border: `${borderColor} ${borderStyle} ${borderWidth}`,
     outline: `${outlineColor} ${outlineStyle} ${outlineWidth} ${outlineOffset}`,
+    color,
     backgroundColor
   };
 });
@@ -107,7 +111,7 @@ const getCursorData = hovStyles => {
 // Returns whether two hover styles are effectively identical.
 const areAlike = (styles0, styles1) => {
   // Return whether they are effectively identical.
-  const areAlike = ['outline', 'border', 'backgroundColor']
+  const areAlike = ['backgroundColor', 'border', 'color', 'outline']
   .every(style => styles1[style] === styles0[style]);
   return areAlike;
 };
@@ -142,18 +146,16 @@ exports.reporter = async (page, withItems, sampleSize = 20) => {
       await loc.focus({timeout: 500});
       // If focusing succeeds, get its style properties.
       const focStyles = await getHoverStyles(loc);
-      // Try to hover over it.
+      // Try to blur it.
       try {
-        await loc.hover({timeout: 500});
-        // If hovering succeeds, get its style properties.
-        const fhStyles = await getHoverStyles(loc);
-        // Try to blur it.
+        await loc.blur({timeout: 500});
+        // If blurring succeeds, try to hover over it.
         try {
-          await loc.blur({timeout: 500});
-          // If blurring succeeds, get its style properties.
+          await loc.hover({timeout: 500});
+          // If hovering succeeds, get its style properties.
           const hovStyles = await getHoverStyles(loc);
-          // If all 4 style declarations belong to the same element:
-          if ([focStyles, fhStyles, hovStyles].every(style => style.code === preStyles.code)) {
+          // If all 3 style declarations belong to the same element:
+          if ([focStyles, hovStyles].every(style => style.code === preStyles.code)) {
             // Get data on the element if itemization is required.
             const elData = withItems ? await getLocatorData(loc) : null;
             // If the hover cursor is nonstandard:
@@ -186,7 +188,7 @@ exports.reporter = async (page, withItems, sampleSize = 20) => {
                 // Add an instance to the result.
                 standardInstances.push({
                   ruleID: 'hovInd',
-                  what: 'Element border, outline, and background color do not change when hovered over',
+                  what: 'Element border, outline, color, and background color do not change when hovered over',
                   ordinalSeverity: 1,
                   tagName: elData.tagName,
                   id: elData.id,
@@ -195,7 +197,7 @@ exports.reporter = async (page, withItems, sampleSize = 20) => {
                 });
               }
             }
-            // If the hover and focus-hover states are indistinct but differ from the default state:
+            // If the hover and focus states are indistinct but differ from the default state:
             if (areAlike(hovStyles, focStyles) && ! areAlike(hovStyles, preStyles)) {
               // Add to the totals.
               totals[1] += psRatio;
@@ -205,7 +207,7 @@ exports.reporter = async (page, withItems, sampleSize = 20) => {
                 // Add an instance to the result.
                 standardInstances.push({
                   ruleID: 'hovInd',
-                  what: 'Element border, outline, and background color are alike on hover and focus',
+                  what: 'Element border, outline, color, and background color are alike on hover and focus',
                   ordinalSeverity: 1,
                   tagName: elData.tagName,
                   id: elData.id,
@@ -223,19 +225,19 @@ exports.reporter = async (page, withItems, sampleSize = 20) => {
             break;
           }
         }
-        // If blurring fails:
+        // If hovering fails:
         catch(error) {
           // Report this.
           data.prevented = true;
-          data.error = 'ERROR: Page changes on focus or hover prevent test';
+          data.error = 'ERROR: Hovering failed';
           break;
         }
       }
-      // If hovering fails:
+      // If blurring fails:
       catch(error) {
         // Report this.
         data.prevented = true;
-        data.error = 'ERROR: Page changes on focus or hover prevent test';
+        data.error = 'ERROR: Blurring failed';
         break;
       }
     }
@@ -243,7 +245,7 @@ exports.reporter = async (page, withItems, sampleSize = 20) => {
     catch(error) {
       // Report this.
       data.prevented = true;
-      data.error = 'ERROR: Page changes on focus or hover prevent test';
+      data.error = 'ERROR: Focusing failed';
       break;
     }
   }
@@ -292,14 +294,14 @@ exports.reporter = async (page, withItems, sampleSize = 20) => {
         excerpt: ''
       });
     }
-    // If any triggers have focus-hover styles not distinct from their focus styles:
-    if (data.typeTotals.fhLikeFocus) {
+    // If any triggers have hover styles not distinct from their focus styles:
+    if (data.typeTotals.hoverLikeFocus) {
       // Add a summary instance to the result.
       standardInstances.push({
         ruleID: 'hovInd',
-        what: 'Element borders, outlines, and background colors on focus do not change when also hovered over',
+        what: 'Element borders, outlines, and background colors on focus and on hover do not differ',
         ordinalSeverity: 1,
-        count: data.typeTotals.fhLikeFocus,
+        count: data.typeTotals.hoverLikeFocus,
         tagName: '',
         id: '',
         location: {

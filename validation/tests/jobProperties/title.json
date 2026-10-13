@@ -1,0 +1,53 @@
+{
+  "rule": "title",
+  "timeLimit": 20,
+  "acts": [
+    {
+      "type": "launch",
+      "target": {
+        "url": "file://validation/tests/targets/title/good.html",
+        "what": "page with a title"
+      }
+    },
+    {
+      "type": "test",
+      "which": "testaro",
+      "stopOnFail": true,
+      "expect": [
+        [
+          "result.title.data.title",
+          "=",
+          "Test page"
+        ]
+      ],
+      "withItems": true,
+      "rules": [
+        "y",
+        "title"
+      ]
+    },
+    {
+      "type": "url",
+      "which": "file://validation/tests/targets/title/bad.html",
+      "what": "page without a title"
+    },
+    {
+      "type": "test",
+      "which": "testaro",
+      "stopOnFail": true,
+      "expect": [
+        [
+          "result.title.data.title",
+          "=",
+          ""
+        ]
+      ],
+      "withItems": true,
+      "rules": [
+        "y",
+        "title"
+      ]
+    }
+  ],
+  "standard": "no"
+}

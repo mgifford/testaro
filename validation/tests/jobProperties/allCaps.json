@@ -1,0 +1,137 @@
+{
+  "rule": "allCaps",
+  "timeLimit": 20,
+  "acts": [
+    {
+      "type": "launch",
+      "target": {
+        "url": "file://validation/tests/targets/allCaps/index.html",
+        "what": "page with various letter cases"
+      }
+    },
+    {
+      "type": "test",
+      "which": "testaro",
+      "withItems": true,
+      "stopOnFail": true,
+      "expect": [
+        [
+          "standardResult.totals.0",
+          "=",
+          4
+        ],
+        [
+          "standardResult.totals.2",
+          "=",
+          0
+        ],
+        [
+          "standardResult.instances.0.ruleID",
+          "=",
+          "allCaps"
+        ],
+        [
+          "standardResult.instances.0.what",
+          "i",
+          "Element contains"
+        ],
+        [
+          "standardResult.instances.0.tagName",
+          "=",
+          "P"
+        ],
+        [
+          "standardResult.instances.0.ordinalSeverity",
+          "=",
+          0
+        ],
+        [
+          "standardResult.instances.1.tagName",
+          "=",
+          "SPAN"
+        ],
+        [
+          "standardResult.instances.1.location.type",
+          "=",
+          "box"
+        ],
+        [
+          "standardResult.instances.1.location.spec.x",
+          ">",
+          0
+        ],
+        [
+          "standardResult.instances.1.location.spec.width",
+          ">",
+          0
+        ],
+        [
+          "standardResult.instances.3.id",
+          "=",
+          "allUC"
+        ],
+        [
+          "standardResult.instances.3.location.type",
+          "=",
+          "selector"
+        ],
+        [
+          "standardResult.instances.3.location.spec",
+          "=",
+          "#allUC"
+        ],
+        [
+          "standardResult.instances.3.excerpt",
+          "i",
+          "ENTIRELY"
+        ]
+      ],
+      "rules": [
+        "y",
+        "allCaps"
+      ]
+    },
+    {
+      "type": "test",
+      "which": "testaro",
+      "withItems": false,
+      "stopOnFail": true,
+      "expect": [
+        [
+          "standardResult.totals.0",
+          "=",
+          4
+        ],
+        [
+          "standardResult.totals.1",
+          "=",
+          0
+        ],
+        [
+          "standardResult.instances.0.ruleID",
+          "=",
+          "allCaps"
+        ],
+        [
+          "standardResult.instances.0.ordinalSeverity",
+          "=",
+          0
+        ],
+        [
+          "standardResult.instances.0.what",
+          "i",
+          "Elements contain"
+        ],
+        [
+          "standardResult.instances.0.count",
+          "=",
+          4
+        ]
+      ],
+      "rules": [
+        "y",
+        "allCaps"
+      ]
+    }
+  ]
+}
